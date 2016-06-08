@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MeetingSpy.AttendeeDetailsPage">
+  <Grid >
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Label Text="Name" />
+    <Label Grid.Column="1" x:Name="Name" Text="Name" />
+    <Label Text="Location" Grid.Row="1" />
+    <Label Text="Start Time:" Grid.Row="2" />
+    <Label x:Name="StartTime" Text="12/12/2015 1:45 PM" Grid.Row="2" Grid.Column="1" />
+    <Label Text="End Time: " Grid.Row="3" />
+    <Label x:Name="EndTime" Text="12/12/2015 2:45 PM" Grid.Row="3" Grid.Column="1" />
+    <Label Grid.Row="4" Text="Attendees" />
+  </Grid>
+
+</ContentPage>
