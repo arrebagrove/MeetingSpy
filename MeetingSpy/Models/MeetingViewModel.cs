@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Graph;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,14 +30,16 @@ namespace MeetingSpy.Models
     {
         public MeetingViewModel()
         {
-            this._meeting = new Meeting();
+            this._meeting = null;
         }
 
-        public static MeetingViewModel CreateInstance(string content)
+        public static MeetingViewModel CreateInstance(Event calendarEvent )
         {
             var instance = new MeetingViewModel();
 
-            instance.Meeting = new Meeting() { Title = "Sync Week", StartTime = "6/6/2016", EndTime = "6/10/2016", Location = "Redmond" };
+            instance.Meeting = calendarEvent;
+
+            //instance.Meeting = new Meeting() { Title = "Sync Week", StartTime = "6/6/2016", EndTime = "6/10/2016", Location = "Redmond" };
 
             return instance;
         }
@@ -51,8 +54,8 @@ namespace MeetingSpy.Models
             }
         }
 
-        private Meeting _meeting;
-        public Meeting Meeting
+        private Event _meeting;
+        public Event Meeting
         {
             get
             {

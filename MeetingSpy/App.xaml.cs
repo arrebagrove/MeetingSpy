@@ -8,7 +8,7 @@ namespace MeetingSpy
 		{
             //InitializeComponent();
 
-            MainPage = new MainPage();// MeetingSpyPage();
+            MainPage = new MeetingSpyPage();
 		}
 
 		protected override void OnStart()

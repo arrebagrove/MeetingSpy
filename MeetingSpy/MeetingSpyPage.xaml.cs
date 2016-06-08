@@ -26,9 +26,11 @@ namespace MeetingSpy
             InitializeComponent();
 
             authContext = new AuthenticationContext(authority);
+
+            GetMeeting();
         }
 
-        async void OnClicked(object sender, EventArgs args)
+        async void GetMeeting()
         {
             AuthenticationResult authResult = await GetADALToken(resource);
 
@@ -47,8 +49,8 @@ namespace MeetingSpy
                 var request = graphserviceClient.Me.Events.Request().Filter(@"Subject eq 'PowerApps for ABB'");
                 var events = await request.GetAsync();
 
-                this.loginBtn.IsVisible = false;
-                this.BindingContext = EventViewModel.CreateInstance(events[0]);
+                //this.loginBtn.IsVisible = false;
+                this.BindingContext = MeetingViewModel.CreateInstance(events[0]);
             }
             catch (ServiceException ex)
             {
@@ -92,8 +94,8 @@ namespace MeetingSpy
                 {
                     var content = await response.Content.ReadAsStringAsync();
 
-                    this.loginBtn.IsVisible = false;
-                    this.BindingContext = ContactViewModel.CreateInstance(content);
+                    //this.loginBtn.IsVisible = false;
+                    //this.BindingContext = ContactViewModel.CreateInstance(content);
                 }
             }
         }
