@@ -40,6 +40,7 @@
       <DependentUpon>AttendeeDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateTimeConverter.cs" />
+    <Compile Include="FaceService.cs" />
     <Compile Include="MeetingSpyPage.xaml.cs">
       <DependentUpon>MeetingSpyPage.xaml</DependentUpon>
     </Compile>
