@@ -6,9 +6,9 @@ namespace MeetingSpy
 	{
 		public App()
 		{
-            //InitializeComponent();
-
-            MainPage = new MeetingSpyPage();
+			MainPage = new NavigationPage(new MeetingSpyPage())
+			{
+			};
 		}
 
 		protected override void OnStart()

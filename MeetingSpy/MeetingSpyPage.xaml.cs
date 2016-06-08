@@ -27,10 +27,24 @@ namespace MeetingSpy
 
             authContext = new AuthenticationContext(authority);
 
-            GetMeeting();
+            
         }
 
-        async void GetMeeting()
+		bool needAdal = true;
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
+
+			if (!needAdal)
+				return;
+
+			needAdal = true;
+			IsBusy = true;
+			await GetMeeting();
+			IsBusy = false;
+		}
+
+        async Task GetMeeting()
         {
             AuthenticationResult authResult = await GetADALToken(resource);
 
@@ -68,14 +82,15 @@ namespace MeetingSpy
 
             try
             {
-                authResult = await authContext.AcquireTokenSilentAsync(serviceResourceId, clientId);
+				authResult = await authContext.AcquireTokenSilentAsync(serviceResourceId, clientId);
+                //authResult = await authContext.AcquireTokenAsync(resource, clientId, new Uri(returnUri), this.PlatformParameters);
             }
-            catch (AdalException ex)
+			catch (Exception ex)
             {
-                if (ex.ErrorCode.Equals(AdalError.FailedToAcquireTokenSilently))
+                //if (ex.ErrorCode.Equals(AdalError.FailedToAcquireTokenSilently))
                 {
-                    authResult = await authContext.AcquireTokenAsync(resource, clientId, new Uri(returnUri), this.PlatformParameters);
-                }
+					authResult = await authContext.AcquireTokenAsync(resource, clientId, new Uri(returnUri), this.PlatformParameters);
+				}
             }
 
             return authResult;
