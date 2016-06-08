@@ -32,14 +32,14 @@ namespace MeetingSpy.Models
             this._meeting = new Meeting();
         }
 
-        //public static MeetingViewModel CreateInstance(string content)
-        //{
-        //    var instance = new MeetingViewModel();
+        public static MeetingViewModel CreateInstance(string content)
+        {
+            var instance = new MeetingViewModel();
 
-        //    instance.Meeting = new Meeting();
+            instance.Meeting = new Meeting() { Title = "Sync Week", StartTime = "6/6/2016", EndTime = "6/10/2016", Location = "Redmond" };
 
-        //    return instance;
-        //}
+            return instance;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

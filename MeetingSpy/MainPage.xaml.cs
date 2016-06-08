@@ -15,11 +15,7 @@ namespace MeetingSpy
         {
             InitializeComponent();
 
-            var meetingVM = new MeetingViewModel() {
-                Meeting = new Meeting() { Title = "Sync Week", StartTime = "6/6/2016", EndTime = "6/10/2016", Location = "Redmond" }
-            };
-
-            this.BindingContext = meetingVM;
+            this.BindingContext = MeetingViewModel.CreateInstance("");
         }
     }
 }
