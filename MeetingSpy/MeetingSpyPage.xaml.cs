@@ -60,7 +60,7 @@ namespace MeetingSpy
                             return Task.FromResult(0);
                         }));
 
-                var request = graphserviceClient.Me.Events.Request().Filter(@"Subject eq 'PowerApps for ABB'");
+                var request = graphserviceClient.Me.Events.Request();//.Filter(@"Subject eq 'PowerApps for ABB'");
                 var events = await request.GetAsync();
 
                 //this.loginBtn.IsVisible = false;

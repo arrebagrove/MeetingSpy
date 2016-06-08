@@ -16,6 +16,7 @@
       <RowDefinition />
       <RowDefinition />
       <RowDefinition />
+      <RowDefinition />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition />
@@ -30,7 +31,7 @@
     <Label Text="End Time: " Grid.Row="3" />
     <Label x:Name="EndTime" Text="{Binding End, Converter={StaticResource DateTimeConverter}}" Grid.Row="3" Grid.Column="1" />
     <Label Grid.Row="4" Text="Attendees" />
-    <ListView x:Name="Attendees" Grid.Row="4" Grid.ColumnSpan="2">
+    <ListView Grid.Row="5" Grid.ColumnSpan="2" BindingContext="{Binding Attendees}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <Grid>
@@ -44,9 +45,9 @@
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Label Text="Name" />
-            <Label Text="{Binding Name}" Grid.Column="1" />
-            <Image Source="{Binding PhotoUrl}" Grid.Row="1" />
-            <Label Text="{Binding Link}" />
+            <Label Text="{Binding EmailAddress.Name}" Grid.Column="1" />
+            <Label Text="Address" Grid.Row="1" />
+            <Label Text="{Binding EmailAddress.Address}" Grid.Row="1" Grid.Column="1" />
           </Grid>
         </DataTemplate>
       </ListView.ItemTemplate>
