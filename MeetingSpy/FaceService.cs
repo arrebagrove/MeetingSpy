@@ -13,7 +13,14 @@ namespace MeetingSpy
     {
         public List<Guid> faceIds;
 
-        public async void DetectFaces(string subscriptionID, List<ReferenceFace> referenceFaces)
+
+        /// <summary>
+        /// Find similar face in a reference set
+        /// </summary>
+        /// <param name="subscriptionID">Cognitive Services Subscription ID</param>
+        /// <param name="referenceFaces">List of faces to compare against</param>
+        /// <param name="lookupFaceUrl">URL of lookup face to find</param>
+        public async void DetectFaces(string subscriptionID, List<ReferenceFace> referenceFaces, string lookupFaceUrl)
         {
             faceIds = new List<Guid>();
             FaceServiceClient faceServiceClient = new FaceServiceClient(subscriptionID);
@@ -25,6 +32,7 @@ namespace MeetingSpy
             {
                 foreach (ReferenceFace refface in referenceFaces)
                 {
+                    // Find faces and get face ids in reference images
                     faces = await faceServiceClient.DetectAsync(refface.ImageURL);
 
                     foreach (var face in faces)
@@ -35,6 +43,11 @@ namespace MeetingSpy
                     }
                 }
 
+                // Find faces and get face IDs in lookup face
+                Microsoft.ProjectOxford.Face.Contract.Face[] lookupFace;
+                lookupFace = await faceServiceClient.DetectAsync(lookupFaceUrl);
+
+                // Get Guid's for all faces that were found in reference set
                 Guid[] faceIDGuids = new Guid[faceCount];
                 int count = 0;
 
@@ -44,12 +57,14 @@ namespace MeetingSpy
                     count++;
                 }
 
-                var results = await faceServiceClient.FindSimilarAsync(faceIds[0], faceIDGuids);
+                // Get the confidence ranking for all faces
+                var results = await faceServiceClient.FindSimilarAsync(lookupFace[0].FaceId, faceIDGuids);
 
+                // Add the confidence ranking back into the reference set
                 foreach (ReferenceFace refface in referenceFaces)
                 {
-                    foreach (var result in results)                
-                     {
+                    foreach (var result in results)
+                    {
                         if (result.FaceId == refface.FaceID)
                         {
                             refface.Confidence = result.Confidence;
