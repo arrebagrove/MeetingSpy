@@ -30,7 +30,7 @@
     <Label Text="End Time: " Grid.Row="3" />
     <Label x:Name="EndTime" Text="{Binding End, Converter={StaticResource DateTimeConverter}}" Grid.Row="3" Grid.Column="1" />
     <Label Grid.Row="4" Text="Attendees" />
-    <ListView x:Name="Attendees" Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding Attendees}">
+    <ListView x:Name="Attendees" Grid.Row="4" Grid.ColumnSpan="2">
       <ListView.ItemTemplate>
         <DataTemplate>
           <Grid>
