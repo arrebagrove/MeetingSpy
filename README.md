@@ -1,0 +1,2 @@
+# MeetingSpy
+A Xamarin hackfest
