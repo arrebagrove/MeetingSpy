@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 		xmlns:local="clr-namespace:MeetingSpy" x:Class="MeetingSpy.MeetingSpyPage"
+		xmlns:converters="clr-namespace:MeetingSpy.Converters"
 		Title="Meeting Spy">
   <ContentPage.Resources>
     <ResourceDictionary>
