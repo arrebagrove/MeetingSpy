@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MeetingSpy.MainPage">
+  <Grid BindingContext="{Meeting}">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Label Text="Title" />
+    <Label Grid.Column="1" x:Name="Title" Text="{Binding Title}" />
+    <Label Text="Location" Grid.Row="1" />
+    <Label Text="Start Time:" Grid.Row="2" />
+    <Label x:Name="StartTime" Text="{Binding StartTime}" Grid.Row="2" Grid.Column="1" />
+    <Label Text="End Time: " Grid.Row="3" />
+    <Label x:Name="EndTime" Text="{Binding EndTime}" Grid.Row="3" Grid.Column="1" />
+    <Label Grid.Row="4" Text="Attendees" />
+    <ListView x:Name="Attendees" Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding Attendees}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Text="Name" />
+            <Label Text="{Binding Name}" Grid.Column="1" />
+            <Image Source="{Binding PhotoUrl}" Grid.Row="1" />
+            <Label Text="{Binding Link}" />
+          </Grid>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </Grid>
+</ContentPage>
