@@ -10,7 +10,11 @@
     </ResourceDictionary>
   </ContentPage.Resources>
   <Grid BindingContext="{Binding Meeting}">
-    <Grid.RowDefinitions>
+
+			<Image x:Name="MockImage"  />
+
+  <!--
+		<Grid.RowDefinitions>
       <RowDefinition />
       <RowDefinition />
       <RowDefinition />
@@ -32,7 +36,7 @@
     <Label x:Name="EndTime" Text="{Binding End, Converter={StaticResource DateTimeConverter}}" Grid.Row="3" Grid.Column="1" />
     <Label Grid.Row="4" Text="Attendees" />
     <Button Grid.Row="5" Text="Details Page" Clicked="AttendeeButton_Click" />
-    <!--<ListView Grid.Row="5" Grid.ColumnSpan="2" BindingContext="{Binding Attendees}">
+    <<ListView Grid.Row="5" Grid.ColumnSpan="2" BindingContext="{Binding Attendees}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <Grid>

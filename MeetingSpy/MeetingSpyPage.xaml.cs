@@ -35,6 +35,21 @@ namespace MeetingSpy
 		{
 			base.OnAppearing();
 
+			MockImage.Source = ImageSource.FromResource("MeetingSpy.MainMock.png");
+
+
+			//MockButton.Clicked += (sender, e) => { this.Navigation.PushAsync(new AttendeeDetailsPage()); };
+
+			MockImage.GestureRecognizers.Add(new TapGestureRecognizer()
+			{
+				Command = new Command(async () =>
+				{
+
+					await this.Navigation.PushAsync(new AttendeeDetailsPage());
+				})
+			});
+
+
 			if (!needAdal)
 				return;
 
