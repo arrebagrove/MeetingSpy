@@ -2,6 +2,7 @@
 using Microsoft.Graph;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -63,7 +64,6 @@ namespace MeetingSpy
         {
             AuthenticationResult authResult = await GetADALToken(resource);
 
-            // create a GraphClient
             try
             {
                 var graphserviceClient = new GraphServiceClient(
@@ -75,19 +75,17 @@ namespace MeetingSpy
                             return Task.FromResult(0);
                         }));
 
-                var request = graphserviceClient.Me.Events.Request();//.Filter(@"Subject eq 'PowerApps for ABB'");
+                var request = graphserviceClient.Me.Events.Request();
                 var events = await request.GetAsync();
 
-                //this.loginBtn.IsVisible = false;
                 this.BindingContext = MeetingViewModel.CreateInstance(events[0]);
             }
-            catch (ServiceException ex)
+            catch (ServiceException)
             {
-                // todo
             }
             catch (Exception ex)
             {
-                // todo
+				Debug.WriteLine("Error loading current meeting: " + ex.Message);
             }
         }
 
