@@ -31,7 +31,8 @@
     <Label Text="End Time: " Grid.Row="3" />
     <Label x:Name="EndTime" Text="{Binding End, Converter={StaticResource DateTimeConverter}}" Grid.Row="3" Grid.Column="1" />
     <Label Grid.Row="4" Text="Attendees" />
-    <ListView Grid.Row="5" Grid.ColumnSpan="2" BindingContext="{Binding Attendees}">
+    <Button Grid.Row="5" Text="Details Page" Clicked="AttendeeButton_Click" />
+    <!--<ListView Grid.Row="5" Grid.ColumnSpan="2" BindingContext="{Binding Attendees}">
       <ListView.ItemTemplate>
         <DataTemplate>
           <Grid>
@@ -48,9 +49,10 @@
             <Label Text="{Binding EmailAddress.Name}" Grid.Column="1" />
             <Label Text="Address" Grid.Row="1" />
             <Label Text="{Binding EmailAddress.Address}" Grid.Row="1" Grid.Column="1" />
+            <Button Text="{Binding EmailAddress.Address}" Clicked="AttendeeButton_Click" />
           </Grid>
         </DataTemplate>
       </ListView.ItemTemplate>
-    </ListView>
+    </ListView>-->
   </Grid>
 </ContentPage>

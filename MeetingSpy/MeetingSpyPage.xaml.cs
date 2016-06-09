@@ -114,6 +114,19 @@ namespace MeetingSpy
                 }
             }
         }
+
+        void AttendeeButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.Navigation.PushAsync(new AttendeeDetailsPage());
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
     }
 }
 

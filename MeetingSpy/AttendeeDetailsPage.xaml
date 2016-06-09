@@ -9,19 +9,33 @@
       <RowDefinition />
       <RowDefinition />
       <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
     <Label Text="Name" />
-    <Label Grid.Column="1" x:Name="Name" Text="Name" />
-    <Label Text="Location" Grid.Row="1" />
-    <Label Text="Start Time:" Grid.Row="2" />
-    <Label x:Name="StartTime" Text="12/12/2015 1:45 PM" Grid.Row="2" Grid.Column="1" />
-    <Label Text="End Time: " Grid.Row="3" />
-    <Label x:Name="EndTime" Text="12/12/2015 2:45 PM" Grid.Row="3" Grid.Column="1" />
-    <Label Grid.Row="4" Text="Attendees" />
+    <Label Grid.Column="1" Text="Name" />
+    <Label Text="Photo" Grid.Row="1" />
+    <Label Text="Photo" Grid.Row="1" Grid.Column="1" />
+    <Label Text="Company" Grid.Row="2" />
+    <Label Text="Company" Grid.Row="2" Grid.Column="1" />
+    <Label Text="Title" Grid.Row="3" />
+    <Label Text="Title" Grid.Row="3" Grid.Column="1" />
+    <Label Text="Manager" Grid.Row="4" />
+    <Label Text="Manager" Grid.Row="4" Grid.Column="1" />
+    <Label Text="Email" Grid.Row="5" />
+    <Label Text="Email" Grid.Row="6" Grid.Column="1" />
+    <Label Text="Phone" Grid.Row="6" />
+    <Label Text="Phone" Grid.Row="6" Grid.Column="1" />
+    <Label Text="Skype Status" Grid.Row="7" />
+    <Label Text="Skype Status" Grid.Row="7" Grid.Column="1" />
+    <Label Text="LinkedIn info" Grid.Row="8" />
+    <Label Text="LinkedIn info" Grid.Row="8" Grid.Column="1" />
   </Grid>
 
 </ContentPage>
