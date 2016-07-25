@@ -1,85 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using Microsoft.ProjectOxford.Face;
-using System.Collections.Specialized;
 
 namespace MeetingSpy
 {
-    class FaceService
+    internal class FaceService
     {
-        public List<Guid> faceIds;
-
+        public List<Guid> FaceIds;
 
         /// <summary>
         /// Find similar face in a reference set
         /// </summary>
-        /// <param name="subscriptionID">Cognitive Services Subscription ID</param>
+        /// <param name="subscriptionId">Cognitive Services Subscription ID</param>
         /// <param name="referenceFaces">List of faces to compare against</param>
         /// <param name="lookupFaceUrl">URL of lookup face to find</param>
-        public async void DetectFaces(string subscriptionID, List<ReferenceFace> referenceFaces, string lookupFaceUrl)
+        /// <returns>New collection of comparison faces with confidence ratings</returns>
+        public async Task<List<ReferenceFace>> DetectFacesAsync(string subscriptionId, List<ReferenceFace> referenceFaces, string lookupFaceUrl)
         {
-            faceIds = new List<Guid>();
-            FaceServiceClient faceServiceClient = new FaceServiceClient(subscriptionID);
+            var resultFaces = new List<ReferenceFace>();
 
-            Microsoft.ProjectOxford.Face.Contract.Face[] faces;
-            int faceCount = 0;
+            FaceIds = new List<Guid>();
+            var faceServiceClient = new FaceServiceClient(subscriptionId);
+
+            var faceCount = 0;
 
             try
             {
-                foreach (ReferenceFace refface in referenceFaces)
+                foreach (var refface in referenceFaces)
                 {
                     // Find faces and get face ids in reference images
-                    faces = await faceServiceClient.DetectAsync(refface.ImageURL);
+                    var faces = await faceServiceClient.DetectAsync(refface.ImageUrl);
 
                     foreach (var face in faces)
                     {
-                        refface.FaceID = face.FaceId;
-                        faceIds.Add(face.FaceId);
+                        refface.FaceId = face.FaceId;
+                        FaceIds.Add(face.FaceId);
                         faceCount++;
                     }
                 }
 
                 // Find faces and get face IDs in lookup face
-                Microsoft.ProjectOxford.Face.Contract.Face[] lookupFace;
-                lookupFace = await faceServiceClient.DetectAsync(lookupFaceUrl);
+                var lookupFace = await faceServiceClient.DetectAsync(lookupFaceUrl);
 
                 // Get Guid's for all faces that were found in reference set
-                Guid[] faceIDGuids = new Guid[faceCount];
-                int count = 0;
+                var faceIdGuids = new Guid[faceCount];
+                var count = 0;
 
-                foreach (var faceid in faceIds)
+                foreach (var faceid in FaceIds)
                 {
-                    faceIDGuids[count] = faceid;
+                    faceIdGuids[count] = faceid;
                     count++;
                 }
 
                 // Get the confidence ranking for all faces
-                var results = await faceServiceClient.FindSimilarAsync(lookupFace[0].FaceId, faceIDGuids);
+                var results = await faceServiceClient.FindSimilarAsync(lookupFace[0].FaceId, faceIdGuids);
+                if (results == null) throw new ArgumentNullException(nameof(results));
 
                 // Add the confidence ranking back into the reference set
-                foreach (ReferenceFace refface in referenceFaces)
+
+                foreach (var refface in referenceFaces)
                 {
+                    var returnFace = new ReferenceFace { FaceId = refface.FaceId, ImageUrl = refface.ImageUrl, Confidence = refface.Confidence };
+
                     foreach (var result in results)
                     {
-                        if (result.FaceId == refface.FaceID)
+                        if (result.FaceId == refface.FaceId)
                         {
-                            refface.Confidence = result.Confidence;
+                            returnFace.Confidence = result.Confidence;
                             break;
                         }
                         else
                         {
-                            refface.Confidence = 0.00;
+                            returnFace.Confidence = 0.00;
                         }
                     }
+                    resultFaces.Add(returnFace);
                 }
             }
-            catch (Exception ex)
+            catch
             {
+                //todo: fancy exception handling
             }
+
+            return resultFaces;
         }
     }
 }

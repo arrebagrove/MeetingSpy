@@ -1,63 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MeetingSpy
 {
-    class ReferenceFace
+    internal class ReferenceFace
     {
-        private Guid faceID;
-        private string imageURL;
-        private double confidence;
-
         public ReferenceFace()
         {
 
         }
 
-        public ReferenceFace(string _imageURL)
+        public ReferenceFace(string imageUrl)
         {
-            imageURL = _imageURL;
+            ImageUrl = imageUrl;
         }
 
-        public Guid FaceID
-        {
-            get
-            {
-                return faceID;
-            }
+        public Guid FaceId { get; set; }
 
-            set
-            {
-                faceID = value;
-            }
-        }
-        public string ImageURL
-        {
-            get
-            {
-                return imageURL;
-            }
+        public string ImageUrl { get; set; }
 
-            set
-            {
-                imageURL = value;
-            }
-        }
-
-        public double Confidence
-        {
-            get
-            {
-                return confidence;
-            }
-
-            set
-            {
-                confidence = value;
-            }
-        }
+        public double Confidence { get; set; }
     }
 }

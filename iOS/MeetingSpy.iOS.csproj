@@ -122,8 +122,12 @@
     <ImageAsset Include="Assets.xcassets\Contents.json">
       <InProject>false</InProject>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Spy_120.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Spy_180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Spy_120.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Spy_180.png">
+      <InProject>false</InProject>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
