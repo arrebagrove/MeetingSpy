@@ -6,7 +6,7 @@ namespace MeetingSpy
 	{
 		public App()
 		{
-			MainPage = new NavigationPage(new MeetingSpyPage())
+			MainPage = new NavigationPage(new MeetingDetails())
 			{
 			};
 		}

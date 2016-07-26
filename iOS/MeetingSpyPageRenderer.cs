@@ -6,19 +6,19 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: Xamarin.Forms.ExportRenderer(typeof(MeetingSpyPage), typeof(MeetingSpyPageRenderer))]
+[assembly: Xamarin.Forms.ExportRenderer(typeof(AuthPage), typeof(MeetingSpyPageRenderer))]
 namespace MeetingSpy.iOS
 {
     public class MeetingSpyPageRenderer : PageRenderer
     {
         // keeps a reference to the page that this is being applied to
-        MeetingSpyPage page;
+        AuthPage page;
 
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
 
-            page = e.NewElement as MeetingSpyPage;
+			page = e.NewElement as AuthPage;
         }
 
         public override void ViewDidLoad()
