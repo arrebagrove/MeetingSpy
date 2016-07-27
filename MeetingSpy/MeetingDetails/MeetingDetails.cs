@@ -9,6 +9,8 @@ namespace MeetingSpy
 
 		private bool _firstVisit = true;
 
+		private MeetingDetailsUI _controller;
+
 
 		public MeetingDetails()
 		{
@@ -38,18 +40,48 @@ namespace MeetingSpy
 			var o365 = new O365();
 			var meeting = await o365.GetMeeting();
 
-			var appointment = new AppointmentDetails
+			AppointmentDetails appointment;
+			if (false)
 			{
-				MeetingTitle = "Test Meeting",
-				Date = DateTime.Now,
-				LocationName = "Conference Room 4",
-				Attendees = {
-					new Attendee { Name="Jason Young", Email="jayoung@microsoft.com" },
-					new Attendee { Name="Graham Elliott", Email="graham.elliott@microsoft.com" }
-				}
-			};
+				appointment = new AppointmentDetails
+				{
+					MeetingTitle = "Test Meeting",
+					Date = DateTime.Now,
+					LocationName = "Conference Room 4",
+					Attendees = {
+						new Attendee { Name="Jason Young", Email="jayoung@microsoft.com" },
+						new Attendee { Name="Graham Elliott", Email="graham.elliott@microsoft.com" }
+					}
+				};
+			}
+			else
+			{
+				appointment = new AppointmentDetails();
 
-			var meetingDetails = new MeetingDetailsUI(_layoutRoot, appointment);
+				appointment.MeetingTitle = meeting.Subject;
+
+				appointment.Date = DateTime.Parse(meeting.Start.DateTime);
+				appointment.Date = DateTime.SpecifyKind(appointment.Date, DateTimeKind.Utc).ToLocalTime();
+
+				var end = DateTime.Parse(meeting.End.DateTime);
+				end = DateTime.SpecifyKind(end, DateTimeKind.Utc).ToLocalTime();
+				appointment.Duration = end - appointment.Date;
+
+				appointment.LocationName = meeting.Location.DisplayName;
+
+				appointment.Attendees = new System.Collections.Generic.List<Attendee>();
+				foreach (var a in meeting.Attendees)
+				{
+					appointment.Attendees.Add(new Attendee { Name = a.EmailAddress.Name, Email = a.EmailAddress.Address });
+				}
+			}
+
+			_controller = new MeetingDetailsUI(_layoutRoot, appointment);
+
+			_controller.AttendeeSelected += (a) =>
+			{
+				this.Navigation.PushAsync(new AttendeeDetailsPage());
+			};
 
 			this.IsBusy = false;
 		}

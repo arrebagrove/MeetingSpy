@@ -20,7 +20,7 @@ namespace MeetingSpy
 		{
 		}
 
-		public async Task<OutlookItem> GetMeeting()
+		public async Task<Event> GetMeeting()
 		{
 			try
 			{

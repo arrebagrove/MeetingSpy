@@ -1,13 +1,31 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace MeetingSpy
 {
-	public class MeetingDetailsUI
+public class MeetingDetailsUI
 	{
+		//private AppointmentDetails apptDetails;
+
+		public delegate void AttendeeClicked(Attendee attendee);
+		public event AttendeeClicked AttendeeSelected;
+
+		public void RaiseAttendeeSelected(Attendee attendee)
+		{
+			//Console.WriteLine("Attendee selected: {0}", attendee.Email);
+
+			var e = AttendeeSelected;
+			if (e != null)
+			{
+				e(attendee);
+			}
+		}
+
 		public MeetingDetailsUI(StackLayout root, AppointmentDetails apptDetails)
 		{
+			//this.apptDetails = apptDetails;
+
 			root.Children.Clear();
 
 			var titleLabel = new Label();
@@ -37,12 +55,19 @@ namespace MeetingSpy
 				timeLabel.Text += string.Format(" ({0:%h} hours, {0:%m} minutes)", apptDetails.Duration);
 			}
 
-			var peopleCells = apptDetails.Attendees.Select(
-				a => new TextCell
+			var peopleCells = new List<TextCell>();
+
+			foreach (var attendee in apptDetails.Attendees)
+			{
+				var aCell = new TextCell
 				{
-					Text = a.Name + " >"
-				}
-			);
+					Text = attendee.Name + " >",
+					Command = new Command(() => { RaiseAttendeeSelected(attendee); })
+				};
+				peopleCells.Add(aCell);
+			};
+
+
 
 			var details = new ViewCell();
 			details.View = new StackLayout()
