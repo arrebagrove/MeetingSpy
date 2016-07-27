@@ -3,6 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using System.IO;
+using System.Net.Http;
+using System.IO.Compression;
 
 namespace MeetingSpy
 {
@@ -11,15 +14,16 @@ namespace MeetingSpy
 		public static async Task<List<SearchResult>> Search(string firstName, string lastName)
 		{
 			const string linkedInSearchUrl = "https://www.linkedin.com/pub/dir/?first={0}&last={1}";
+			const string UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36";
 
 			var firstNameEncoded = System.Net.WebUtility.UrlEncode(firstName);
 			var LastNameEncoded = System.Net.WebUtility.UrlEncode(lastName);
 
-			var http = new System.Net.Http.HttpClient();
+
 
 			var actualSearchUrl = string.Format(linkedInSearchUrl, firstNameEncoded, LastNameEncoded);
 
-			var response = await http.GetStringAsync(actualSearchUrl);
+			var response = await GetResponse(actualSearchUrl);
 
 			if (response.Length == 0)
 			{
@@ -113,6 +117,25 @@ namespace MeetingSpy
 			return searchResults;
 		}
 
+		private static async Task<string> GetResponse(string url)
+		{
+			var httpClient = new HttpClient();
+
+			httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml");
+			httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
+			httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0");
+			httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Charset", "ISO-8859-1");
+
+			var response = await httpClient.GetAsync(new Uri(url));
+
+			response.EnsureSuccessStatusCode();
+			using (var responseStream = await response.Content.ReadAsStreamAsync())
+			using (var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress))
+			using (var streamReader = new StreamReader(decompressedStream))
+			{
+				return streamReader.ReadToEnd();
+			}
+		}
 	}
 
 	public class SearchResult
