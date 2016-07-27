@@ -80,7 +80,7 @@ namespace MeetingSpy
 
 			_controller.AttendeeSelected += (a) =>
 			{
-				this.Navigation.PushAsync(new AttendeeDetailsPage());
+				this.Navigation.PushAsync(new AttendeeDetailsPage(a));
 			};
 
 			this.IsBusy = false;

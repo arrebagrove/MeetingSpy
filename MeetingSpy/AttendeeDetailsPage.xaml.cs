@@ -4,17 +4,23 @@ namespace MeetingSpy
 {
     public partial class AttendeeDetailsPage : ContentPage
     {
-        public AttendeeDetailsPage()
+		private Attendee _attendee;
+
+        public AttendeeDetailsPage(Attendee attendee)
         {
-            InitializeComponent();
+			this.InitializeComponent();
+
+			_attendee = attendee;
         }
 
 		protected override async void OnAppearing()
 		{
 			base.OnAppearing();
 
+			var parts = _attendee.Name.Split(" ".ToCharArray());
+
 			IsBusy = true;
-			var linkedInAttendees = await LinkedIn.Search("Richard", "Custance");
+			var linkedInAttendees = await LinkedIn.Search(parts[0], parts[1]);
 			IsBusy = false;
 
 			DetailLabel.Text = "";
