@@ -117,6 +117,7 @@ namespace MeetingSpy
 			return searchResults;
 		}
 
+		//http://stackoverflow.com/questions/15026953/httpclient-request-like-browser
 		private static async Task<string> GetResponse(string url)
 		{
 			var httpClient = new HttpClient();
